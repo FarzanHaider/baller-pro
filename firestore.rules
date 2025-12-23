@@ -1,0 +1,233 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================================================
+    // GLOBAL HELPERS
+    // ============================================================================
+    
+    // Check if user is authenticated (any auth provider)
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if user is accessing their own document
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+    
+    // Check if a field exists in the incoming data
+    function hasField(field) {
+      return field in request.resource.data;
+    }
+    
+    // Check if a field is unchanged from existing data
+    function isUnchanged(field) {
+      return !hasField(field) || 
+             request.resource.data[field] == resource.data[field];
+    }
+    
+    
+    // ============================================================================
+    // USERS COLLECTION
+    // ============================================================================
+    
+    match /users/{uid} {
+      // READ: Any authenticated user can read user profiles (for social features)
+      allow read: if isAuthenticated();
+      
+      // CREATE: Users can only create their own document
+      // - Must be authenticated
+      // - Document ID must match auth UID
+      allow create: if isOwner(uid);
+      
+      // UPDATE: Users can only update their own document
+      // - Cannot change core identity fields if they exist
+      allow update: if isOwner(uid);
+      
+      // DELETE: Disallow hard deletes (use soft delete pattern with deletedAt field)
+      allow delete: if false;
+      
+      
+      // --------------------------------------------------------------------------
+      // ONBOARDING (embedded in user document)
+      // --------------------------------------------------------------------------
+      // Onboarding data is stored as a nested object in the user document
+      // - Only document owner can write onboarding data
+      // - No step-level validation in rules (handled by app logic)
+      // - Rules are inherited from parent /users/{uid} update rule
+      
+      
+      // --------------------------------------------------------------------------
+      // FOLLOWING / FOLLOWERS (subcollections - future social features)
+      // --------------------------------------------------------------------------
+      
+      match /following/{followedUid} {
+        // READ: User can see who they follow, or anyone can see public following list
+        allow read: if isAuthenticated();
+        
+        // CREATE/DELETE: User can only manage their own following list
+        allow create, delete: if isOwner(uid);
+        
+        // UPDATE: Not applicable (following is binary - exists or not)
+        allow update: if false;
+      }
+      
+      match /followers/{followerUid} {
+        // READ: User can see their followers, or anyone can see public followers list
+        allow read: if isAuthenticated();
+        
+        // CREATE/DELETE: System-managed (mirror of following collection)
+        // In practice, app creates follower entry when user A follows user B
+        // App must write to both /users/A/following/B and /users/B/followers/A
+        allow create, delete: if isAuthenticated();
+        
+        // UPDATE: Not applicable
+        allow update: if false;
+      }
+    }
+    
+    
+    // ============================================================================
+    // WORKOUTS COLLECTION
+    // ============================================================================
+    
+    match /workouts/{workoutId} {
+      // READ: Any authenticated user can view workouts
+      allow read: if isAuthenticated();
+      
+      // CREATE: Authenticated users can create workouts
+      // - Must set createdBy field to their own UID
+      allow create: if isAuthenticated() && 
+                       hasField('createdBy') &&
+                       request.resource.data.createdBy == request.auth.uid;
+      
+      // UPDATE: Only the creator can modify their workout
+      // - Cannot change createdBy field (immutable after creation)
+      allow update: if isAuthenticated() &&
+                       resource.data.createdBy == request.auth.uid &&
+                       isUnchanged('createdBy');
+      
+      // DELETE: Disallow hard deletes (use soft delete with deletedAt field)
+      allow delete: if false;
+    }
+    
+    
+    // ============================================================================
+    // WORKOUT SESSIONS (user's workout history)
+    // ============================================================================
+    
+    match /workoutSessions/{sessionId} {
+      // READ: Users can only read their own workout sessions
+      // (Sessions have userId field indicating owner)
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+      
+      // CREATE: Users can only create their own workout sessions
+      // - Must set userId to their own UID
+      allow create: if isAuthenticated() &&
+                       hasField('userId') &&
+                       request.resource.data.userId == request.auth.uid;
+      
+      // UPDATE: Users can only update their own sessions
+      // - Cannot change userId (immutable)
+      allow update: if isAuthenticated() &&
+                       resource.data.userId == request.auth.uid &&
+                       isUnchanged('userId');
+      
+      // DELETE: Users can delete their own sessions
+      allow delete: if isAuthenticated() &&
+                       resource.data.userId == request.auth.uid;
+    }
+    
+    
+    // ============================================================================
+    // SOCIAL FEATURES (posts, likes, comments - future implementation)
+    // ============================================================================
+    
+    match /posts/{postId} {
+      // READ: Any authenticated user can view posts
+      allow read: if isAuthenticated();
+      
+      // WRITE: Deny for now (will be implemented in Phase 2)
+      // When implemented:
+      // - Users can create posts with their UID as authorId
+      // - Only author can update/delete their posts
+      // - Prevent authorId from being changed
+      allow write: if false;
+      
+      // Nested comments subcollection
+      match /comments/{commentId} {
+        allow read: if isAuthenticated();
+        allow write: if false; // Phase 2
+      }
+    }
+    
+    match /likes/{likeId} {
+      // READ: Any authenticated user can see likes
+      allow read: if isAuthenticated();
+      
+      // WRITE: Deny for now (Phase 2)
+      // When implemented:
+      // - Users can like/unlike posts
+      // - likeId format: {postId}_{userId}
+      allow write: if false;
+    }
+    
+    
+    // ============================================================================
+    // MEALS & NUTRITION (future implementation)
+    // ============================================================================
+    
+    match /meals/{mealId} {
+      // READ: Users can only read their own meals
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+      
+      // CREATE: Users can only create their own meals
+      allow create: if isAuthenticated() &&
+                       hasField('userId') &&
+                       request.resource.data.userId == request.auth.uid;
+      
+      // UPDATE: Users can only update their own meals
+      allow update: if isAuthenticated() &&
+                       resource.data.userId == request.auth.uid &&
+                       isUnchanged('userId');
+      
+      // DELETE: Users can delete their own meals
+      allow delete: if isAuthenticated() &&
+                       resource.data.userId == request.auth.uid;
+    }
+    
+    
+    // ============================================================================
+    // PROGRAMS (workout programs - future implementation)
+    // ============================================================================
+    
+    match /programs/{programId} {
+      // READ: Any authenticated user can view programs
+      allow read: if isAuthenticated();
+      
+      // CREATE: Authenticated users can create programs
+      allow create: if isAuthenticated() &&
+                       hasField('createdBy') &&
+                       request.resource.data.createdBy == request.auth.uid;
+      
+      // UPDATE: Only creator can modify
+      allow update: if isAuthenticated() &&
+                       resource.data.createdBy == request.auth.uid &&
+                       isUnchanged('createdBy');
+      
+      // DELETE: Disallow hard deletes
+      allow delete: if false;
+    }
+    
+    
+    // ============================================================================
+    // DEFAULT DENY
+    // ============================================================================
+    // Any collection not explicitly defined above is denied by default
+  }
+}
+
