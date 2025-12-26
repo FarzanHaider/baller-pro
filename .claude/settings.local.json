@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(npx @nestjs/cli:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma init)",
+      "Bash(npx prisma:*)",
+      "Bash(npm run build)",
+      "Bash(docker:*)",
+      "Bash(docker.exe:*)",
+      "Bash(/mnt/c/Program Files/Docker/Docker/resources/bin/docker.exe --version)",
+      "Bash(/c/Program Files/Docker/Docker/resources/bin/docker.exe --version)"
+    ]
+  }
+}

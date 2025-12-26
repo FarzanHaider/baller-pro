@@ -1,6 +1,7 @@
 {
   "name": "ballerpro",
   "version": "1.0.0",
+<<<<<<< HEAD
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -44,3 +45,24 @@
   },
   "private": true
 }
+=======
+  "description": "BallerPro - Full Stack Fitness Application",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
+
+>>>>>>> 4d9004c5c2e3af08fa43569063aa8696d9b1a46d
