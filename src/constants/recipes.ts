@@ -1,0 +1,71 @@
+import { Recipe, FilterOption } from '@/types/recipe';
+
+export const RECIPE_FILTERS: FilterOption[] = [
+  { id: '1', label: 'High Protein', active: true },
+  { id: '2', label: 'Low Carb', active: false },
+  { id: '3', label: 'Vegan', active: false },
+  { id: '4', label: 'Under 30 Min', active: false },
+];
+
+export const MOCK_RECIPES: Recipe[] = [
+  {
+    id: '1',
+    title: 'Spicy Chicken & Quinoa',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAUz-5_nYb9ucLZadnos0FPWSjO7F-g09UQF0OfvgK8XmGqkMVcRQ4ajX_sO9vWPJZMSnkC0jYH0fxT0ZPtV7uCHdUPQD8RXQEyu56sIofL4vMcatNocMl8brBNUaiSl6jsMo8KRPEv9jODqwSzubLD0evCtMa353WZE5mj7dxN35xwvayhkHXKDyp9U6kSaFAEXeW5sYJy0iR_VRIxz6CDbcz98hcRf_lL8RDDIhOG8d9Y7r8bVt4gizmWMiBHpZcMVYzE_x5fZ3Q',
+    calories: 450,
+    protein: 35,
+    carbs: 40,
+    fat: 15,
+    isFavorite: true,
+  },
+  {
+    id: '2',
+    title: 'Avocado Toast Supreme',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAIQKbFeobjULNs00KirAi9whoQuDc6Hhiba0PvYNmRqC9pmx0VYjmNZlWRzNLhwCncZtZhxwBNSvkLQZ__-nrKPAiWpObGAioJviPTpe-4vORaptlL6T5f25gIFcv14dPbI5lIopoIFvijs2soLpV6kJJOiwhuSObEQym9ys3TtbBSMEK5YvAPuycDIHyOeG5RMBNUxyLp-LxUcC3h_OolZ5W19UElTieahBv5D2kDNWNKRGwKviBGSHweTD0rD-1TJgm6zy98bfI',
+    calories: 320,
+    protein: 12,
+    carbs: 30,
+    fat: 18,
+    isFavorite: false,
+  },
+  {
+    id: '3',
+    title: 'Berry Protein Smoothie',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCDLZEfa5I9El3ATEO8hHLPLPQh2c4EG6T2JYWhjwuF9iaHubN02izbXh1aHk4R8Z7zNiI1p7HD3duO1tD59-xHDY100SliJm-f80vsUcw39zH1qzEofFz0uXqBor0e1_NTA78Njlk8Y_EyyWogb4Cd-iPfXNIRYgRTqkfVqN0ZeMTsyfhuv8sEwXGENsF06wgGr5-FhNwBO4DhC57gmQNy3HMs2M8OdHroXeusdfFhwqIoqhJTO5WDdFD29njpdyuNE-Kw18JBGC0',
+    calories: 280,
+    protein: 30,
+    carbs: 25,
+    fat: 5,
+    isFavorite: false,
+  },
+  {
+    id: '4',
+    title: 'Lentil & Veggie Soup',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDFEgwcAvFPpYrqEi5WR2-xmaHzeWkdfiUFvyYaNBIn6ClqK4fRBnY_XDe9L8SaM543j8QOA7RoBK1GAmXjoxxcqBgG2Hx_QAlWCBKwhBcEXxqLfYjonPMm-CEVDQU-TvQ9xpQvf5fZS3hY2PaqBq_9Msj17dkBsk1G6vTYBTV_cZbNMqsERILnawIZDOtJlUDYucsvil3INt0sSGcJktqXJWIs7W8YFk2KD6cJRhmUR1gPbWqrvUo_5feBXqIOfD6El21G0FZKRIg',
+    calories: 350,
+    protein: 18,
+    carbs: 50,
+    fat: 8,
+    isFavorite: false,
+  },
+  {
+    id: '5',
+    title: 'Salmon with Asparagus',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA3gOOc51A92wjlbfcwKDm7DmJ2oCHERWDs5QXVvlVjwV1cFU013bszNr3-OYpNXai4vhNA0WpWzljRONfbCzGNkLhU5AXyovP71ZviVIgFUWvyuVRMR29XxdsGZ-rUoonMPP75cPJOJr2bp5znmbF4V_DQPY8i4OIZHp0bYbb5sa9Lzz9WAWLes4CbR3jW_hsFBj5rm4oOwD-LuAj5D0M6awGTAK7CX-yArdjWgxZhGNbd9kbZ4s2vDIObI1oU2nebsQFKZy12-dI',
+    calories: 520,
+    protein: 40,
+    carbs: 10,
+    fat: 35,
+    isFavorite: true,
+  },
+  {
+    id: '6',
+    title: 'Greek Yogurt Bowl',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBNkbav2P6kpN6umufznV-6GqEJTU9am4EFesGqA3-3JAxAI3MFqy5zF_WNyBl8yNMxzguExf40r_kBPpwY04ZMfICQ5J6jrR8HAqWHm4MHxJx-FpKS1QD6FQVxz0VI9P-dx7NigBv1f36KX53TCrMQJFlXuvSb6xc7pJAg7KoZ1A_JQGJLnJlfDZ3-t1oeSE2zsq2HNyVs7TnaMAX7txjMd_yoB-hsIDNrpDkIegGOWPsGA9U-xgh6VC3Z2dvWS0WQJGdCZnXcH20',
+    calories: 250,
+    protein: 25,
+    carbs: 20,
+    fat: 8,
+    isFavorite: false,
+  },
+];
