@@ -74,3 +74,8 @@ backend/.env
 # Frontend
 frontend/node_modules/
 frontend/.expo/
+
+
+# Prisma
+node_modules/.prisma
+/backend/prisma/generated-client/
