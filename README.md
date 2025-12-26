@@ -360,5 +360,5 @@ For the complete Entity Relationship Diagram, see **[ERD.md](./ERD.md)**
 ---
 
 **Made with 💪 for fitness enthusiasts**
- 4d9004c5c2e3af08fa43569063aa8696d9b1a46d
+ 
 
