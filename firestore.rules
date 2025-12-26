@@ -3,9 +3,9 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // ============================================================================
+    // ======
     // GLOBAL HELPERS
-    // ============================================================================
+    // ======
     
     // Check if user is authenticated (any auth provider)
     function isAuthenticated() {
@@ -29,9 +29,9 @@ service cloud.firestore {
     }
     
     
-    // ============================================================================
+    // ======
     // USERS COLLECTION
-    // ============================================================================
+    // ======
     
     match /users/{uid} {
       // READ: Any authenticated user can read user profiles (for social features)
@@ -89,9 +89,9 @@ service cloud.firestore {
     }
     
     
-    // ============================================================================
+    // ======
     // WORKOUTS COLLECTION
-    // ============================================================================
+    // ======
     
     match /workouts/{workoutId} {
       // READ: Any authenticated user can view workouts
@@ -114,9 +114,9 @@ service cloud.firestore {
     }
     
     
-    // ============================================================================
+    // ======
     // WORKOUT SESSIONS (user's workout history)
-    // ============================================================================
+    // ======
     
     match /workoutSessions/{sessionId} {
       // READ: Users can only read their own workout sessions
@@ -142,9 +142,9 @@ service cloud.firestore {
     }
     
     
-    // ============================================================================
+    // ======
     // SOCIAL FEATURES (posts, likes, comments - future implementation)
-    // ============================================================================
+    // ======
     
     match /posts/{postId} {
       // READ: Any authenticated user can view posts
@@ -176,9 +176,9 @@ service cloud.firestore {
     }
     
     
-    // ============================================================================
+    // ======
     // MEALS & NUTRITION (future implementation)
-    // ============================================================================
+    // ======
     
     match /meals/{mealId} {
       // READ: Users can only read their own meals
@@ -201,9 +201,9 @@ service cloud.firestore {
     }
     
     
-    // ============================================================================
+    // ======
     // PROGRAMS (workout programs - future implementation)
-    // ============================================================================
+    // ======
     
     match /programs/{programId} {
       // READ: Any authenticated user can view programs
@@ -224,9 +224,9 @@ service cloud.firestore {
     }
     
     
-    // ============================================================================
+    // ======
     // DEFAULT DENY
-    // ============================================================================
+    // ======
     // Any collection not explicitly defined above is denied by default
   }
 }

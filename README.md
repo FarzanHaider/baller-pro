@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # BallerPro Frontend
 
 React Native mobile application built with Expo and Expo Router.
@@ -43,7 +43,7 @@ React Native mobile application built with Expo and Expo Router.
 - TypeScript for type safety
 - Feature-based architecture
 - Theme system for consistent styling
-=======
+
 # BallerPro 💪
 
 A comprehensive fitness mobile application built with React Native (Expo) and Node.js/Express backend.
@@ -360,5 +360,5 @@ For the complete Entity Relationship Diagram, see **[ERD.md](./ERD.md)**
 ---
 
 **Made with 💪 for fitness enthusiasts**
->>>>>>> 4d9004c5c2e3af08fa43569063aa8696d9b1a46d
+ 4d9004c5c2e3af08fa43569063aa8696d9b1a46d
 

@@ -1,7 +1,7 @@
 {
   "name": "ballerpro",
   "version": "1.0.0",
-<<<<<<< HEAD
+
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -45,7 +45,7 @@
   },
   "private": true
 }
-=======
+
   "description": "BallerPro - Full Stack Fitness Application",
   "private": true,
   "scripts": {
@@ -65,4 +65,4 @@
   }
 }
 
->>>>>>> 4d9004c5c2e3af08fa43569063aa8696d9b1a46d
+ 4d9004c5c2e3af08fa43569063aa8696d9b1a46d
